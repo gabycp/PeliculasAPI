@@ -45,7 +45,7 @@ namespace PeliculasAPI.Controllers
         public async Task<ActionResult> Post([FromForm] ActorCreacionDTO actorCreacionDTO) 
         {
             var actor = mapper.Map<Actor>(actorCreacionDTO);
-            context.Add(actor);
+             context.Add(actor);
             //await context.SaveChangesAsync();
 
             var actorDTO = mapper.Map<ActorDTO>(actor);
