@@ -17,7 +17,10 @@ namespace PeliculasAPI
         {
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivoAzure>();
+            //Alamcenamiento de imagenes en AzureStorage
+            //services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivoAzure>();
+            services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivoLocal>();
+            services.AddHttpContextAccessor();
 
             services.AddControllers();
 
