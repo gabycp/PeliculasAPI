@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PeliculasAPI.Servicios;
 
 namespace PeliculasAPI
 {
@@ -15,6 +16,8 @@ namespace PeliculasAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivoAzure>();
 
             services.AddControllers();
 
