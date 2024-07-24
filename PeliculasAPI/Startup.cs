@@ -50,6 +50,7 @@ namespace PeliculasAPI
 
             app.UseRouting();
 
+            app.UseStaticFiles();
             //app.UseCors();
 
             app.UseAuthorization();
