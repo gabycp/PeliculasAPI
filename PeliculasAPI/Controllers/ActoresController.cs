@@ -15,12 +15,15 @@ namespace PeliculasAPI.Controllers
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
         private readonly string contenedor = "actores";
-        private readonly AlmacenadorArchivoAzure almacenadorArchivo;
+        //private readonly AlmacenadorArchivoAzure almacenadorArchivo;
+        private readonly  IAlmacenadorArchivos almacenadorArchivos;
 
-        public ActoresController( ApplicationDbContext context, IMapper mapper ) 
+        public ActoresController( ApplicationDbContext context, IMapper mapper,
+            IAlmacenadorArchivos almacenadorArchivos) 
         {
             this.context = context;
             this.mapper = mapper;
+            this.almacenadorArchivos = almacenadorArchivos;
         }
 
         [HttpGet]
@@ -57,7 +60,7 @@ namespace PeliculasAPI.Controllers
                     await actorCreacionDTO.Foto.CopyToAsync(memoryStream);
                     var contenido = memoryStream.ToArray();
                     var extension = Path.GetExtension(actorCreacionDTO.Foto.FileName);
-                    entidad.Foto = await almacenadorArchivo.GuardarArchivo(contenido, extension, contenedor,
+                    entidad.Foto = await almacenadorArchivos.GuardarArchivo(contenido, extension, contenedor,
                                            actorCreacionDTO.Foto.ContentType);
                 }
             }
@@ -88,7 +91,7 @@ namespace PeliculasAPI.Controllers
                     await actorCreacionDTO.Foto.CopyToAsync(memoryStream);
                     var contenido = memoryStream.ToArray();
                     var extension = Path.GetExtension(actorCreacionDTO.Foto.FileName);
-                    actorDB.Foto = await almacenadorArchivo.EditarArchivo(contenido, extension, contenedor,
+                    actorDB.Foto = await almacenadorArchivos.EditarArchivo(contenido, extension, contenedor,
                                             actorDB.Foto,
                                            actorCreacionDTO.Foto.ContentType);
                 }

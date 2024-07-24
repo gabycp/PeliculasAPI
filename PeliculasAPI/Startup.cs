@@ -17,10 +17,7 @@ namespace PeliculasAPI
         {
             services.AddAutoMapper(typeof(Startup));
 
-            //Alamcenamiento de imagenes en AzureStorage
-            //services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivoAzure>();
-            services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivoLocal>();
-            services.AddHttpContextAccessor();
+            
 
             services.AddControllers();
 
@@ -28,6 +25,11 @@ namespace PeliculasAPI
             //    options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //Alamcenamiento de imagenes en AzureStorage
+            //services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivoAzure>();
+            services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivoLocal>();
+            services.AddHttpContextAccessor();
 
             services.AddEndpointsApiExplorer();
         }
