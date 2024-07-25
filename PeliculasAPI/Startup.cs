@@ -19,7 +19,8 @@ namespace PeliculasAPI
 
             
 
-            services.AddControllers();
+            services.AddControllers()
+                        .AddNewtonsoftJson();
 
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));

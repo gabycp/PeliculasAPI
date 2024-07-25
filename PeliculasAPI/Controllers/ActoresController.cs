@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.Execution;
+using Azure;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PeliculasAPI.DTOs;
@@ -71,6 +73,30 @@ namespace PeliculasAPI.Controllers
             var actorDTO = mapper.Map<ActorDTO>(entidad);
             return new CreatedAtRouteResult("obtenerActor", new { id = actorDTO.Id }, actorDTO);
 
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> Patch(int id, [FromBody] JsonPatchDocument<ActorPatchDTO> patchDocument) 
+        {
+            if (patchDocument == null) return BadRequest();
+
+            var entidadDB = await context.Actores.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (entidadDB == null) return NotFound();
+
+            var entidadDTO = mapper.Map<ActorPatchDTO>(entidadDB);
+
+            patchDocument.ApplyTo(entidadDTO, ModelState);
+
+            var esValido = TryValidateModel(entidadDTO);
+
+            if(!esValido) return BadRequest();
+
+            mapper.Map(entidadDTO, entidadDB);
+
+            await context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         [HttpPut("{id:int}")]
