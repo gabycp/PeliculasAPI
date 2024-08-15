@@ -52,23 +52,23 @@ namespace PeliculasAPI.Controllers
 
             return Ok();
 
-            //if (peliculasCreacionDTO.Poster != null)
-            //{
-            //    using (var memoryStream = new MemoryStream())
-            //    {
-            //        await peliculasCreacionDTO.Poster.CopyToAsync(memoryStream);
-            //        var contenido = memoryStream.ToArray();
-            //        var extension = Path.GetExtension(peliculasCreacionDTO.Poster.FileName);
-            //        pelicula.Poster = await almacenadorArchivos.GuardarArchivo(contenido, extension, contenedor,
-            //                               peliculasCreacionDTO.Poster.ContentType);
-            //    }
-            //}
+            if (peliculasCreacionDTO.Poster != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await peliculasCreacionDTO.Poster.CopyToAsync(memoryStream);
+                    var contenido = memoryStream.ToArray();
+                    var extension = Path.GetExtension(peliculasCreacionDTO.Poster.FileName);
+                    pelicula.Poster = await almacenadorArchivos.GuardarArchivo(contenido, extension, contenedor,
+                                           peliculasCreacionDTO.Poster.ContentType);
+                }
+            }
 
-            //context.Add(pelicula);
-            //await context.SaveChangesAsync();
+            context.Add(pelicula);
+            await context.SaveChangesAsync();
 
-            //var peliculaDTO = mapper.Map<PeliculaDTO>(pelicula);
-            //return new CreatedAtRouteResult("obtenerPelicula", new { id = pelicula.Id }, peliculaDTO);
+            var peliculaDTO = mapper.Map<PeliculaDTO>(pelicula);
+            return new CreatedAtRouteResult("obtenerPelicula", new { id = pelicula.Id }, peliculaDTO);
         }
 
         [HttpPut("{id:int}")]
