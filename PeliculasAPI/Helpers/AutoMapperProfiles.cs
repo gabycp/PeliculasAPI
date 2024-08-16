@@ -17,9 +17,24 @@ namespace PeliculasAPI.Helpers
 
             CreateMap<Peliculas, PeliculaDTO>().ReverseMap();
             CreateMap<PeliculasCreacionDTO, Peliculas>()
-                .ForMember(x => x.Poster, options => options.Ignore());
+                .ForMember(x => x.Poster, options => options.Ignore())
+                .ForMember(x => x.peliculasGeneros, options => options.MapFrom(MapPeliculasGeneros));
             CreateMap<PeliculaPatchDTO, Peliculas>().ReverseMap();
 
+        }
+
+        private List<PeliculasGeneros> MapPeliculasGeneros(PeliculasCreacionDTO peliculasCreacionDTO, Peliculas peliculas) 
+        {
+            var resultado = new List<PeliculasGeneros>();
+
+            if(peliculasCreacionDTO.GeneroIds == null) return resultado;
+
+            foreach (var id in peliculasCreacionDTO.GeneroIds) 
+            {
+                resultado.Add(new PeliculasGeneros() { GeneroId = id });
+            }
+
+            return resultado;   
         }
     }
 }
