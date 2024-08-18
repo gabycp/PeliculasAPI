@@ -28,11 +28,29 @@ namespace PeliculasAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<PeliculaDTO>>> Get() 
+        public async Task<ActionResult<PeliculasIndexDTO>> Get() 
         {
-            var peliculas = await context.Peliculas.ToListAsync();
+            var top = 5;
+            var hoy = DateTime.Now;
 
-            return mapper.Map<List<PeliculaDTO>>(peliculas);
+            var proximosEstrenos = await context.Peliculas
+                .Where( x=> x.FechaEstreno >  hoy )
+                .OrderBy( x => x.FechaEstreno )
+                .Take(top)
+                .ToListAsync();
+
+            var enCines = await context.Peliculas
+                .Where(x => x.EnCines)
+                .Take(top)
+                .ToListAsync();
+
+            var resultado = new PeliculasIndexDTO();
+
+            resultado.FuturosEstrenos = mapper.Map<List<PeliculaDTO>>(proximosEstrenos);
+            resultado.EnCines = mapper.Map<List<PeliculaDTO>>(enCines);
+
+            return resultado;
+
         }
 
         [HttpGet("{id}", Name = "obtenerPelicula")]
