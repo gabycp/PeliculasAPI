@@ -2,7 +2,7 @@
 
 namespace PeliculasAPI.Entidades
 {
-    public class Peliculas
+    public class Peliculas:IId
     {
         public int Id { get; set; }
         [Required]
