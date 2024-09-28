@@ -1,0 +1,13 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PeliculasAPI.Entidades
+{
+    public class SalaDeCine: IId
+    {
+        public int Id { get; set; }
+        [Required]
+        [StringLength(1)]
+        public string Nombre { get; set; }
+        public List<PeliculasSalaDeCines> peliculasSalaDeCines { get; set; }
+    }
+}
