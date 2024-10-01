@@ -6,7 +6,7 @@ namespace PeliculasAPI.Entidades
     {
         public int Id { get; set; }
         [Required]
-        [StringLength(1)]
+        [StringLength(120)]
         public string Nombre { get; set; }
         public List<PeliculasSalaDeCines> peliculasSalaDeCines { get; set; }
     }
