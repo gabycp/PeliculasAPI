@@ -71,6 +71,13 @@ namespace PeliculasAPI
 
             var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
 
+            modelBuilder.Entity<SalaDeCine>()
+                .HasData(new List<SalaDeCine>
+                {
+                    new SalaDeCine{Id = 7, Nombre = "Sambil", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-69.9118804, 18.4826214))},
+                    new SalaDeCine{Id = 8, Nombre = "Megacentro", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-69.856427, 18.506934))},
+                    new SalaDeCine{Id = 9, Nombre = "Village East Cinema", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-73.986227, 40.739898))}
+                });
            
 
             var aventura = new Genero() { Id = 4, Nombre = "Aventura" };
