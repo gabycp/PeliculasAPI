@@ -24,7 +24,7 @@
     <PackageReference Include="NetTopologySuite" Version="2.5.0" />
     <PackageReference Include="System.Formats.Asn1" Version="6.0.1" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.4.5" />
-    <PackageReference Include="System.Text.Json" Version="8.0.4" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
 
   <ItemGroup>
